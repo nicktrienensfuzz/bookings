@@ -1,0 +1,69 @@
+html, body {
+  background-color: black;
+  min-height: 100%;
+  color: #eee;
+}
+
+.container {
+  text-align: center;
+}
+
+.heading {
+  font-size: 72px;
+  margin-top: 200px;
+}
+
+.bi-google {
+  margin-bottom: 4px;
+}
+
+.cta {
+  margin-top: 40px;
+}
+
+.cta-time {
+  padding: 8px 24px;
+}
+
+.calendar-block {
+  margin-top: 100px;
+  text-align: center;
+}
+
+.datepicker-container {
+  display: inline-block;
+  margin-top: 24px;
+  background: #eee;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+#datepicker {
+  background: transparent;
+  border: 0;
+}
+
+.bi-calendar {
+  height: 18px;
+  width: 18px;
+  margin-bottom: 4px;
+}
+
+.table-custom {
+  --bs-table-bg: #111;
+  color: #ddd;
+  margin-top: 60px;
+}
+
+.table-container {
+  margin: 0 80px;
+}
+
+.user {
+  display: inline;
+  margin-left: 60px;
+}
+
+.heading-2 {
+  margin-bottom: 36px;
+}
