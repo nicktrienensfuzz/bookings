@@ -21,7 +21,7 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(express.json());
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 app.get("/", (req, res) => {
   if (req.query.code) {
