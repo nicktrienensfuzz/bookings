@@ -55,7 +55,7 @@ app.get("/auth/google/callback", async (req, res) => {
       await user.save();
     }
 
-    res.render("auth", { url: `http://localhost:5001/calendar/${user._id}` });
+    res.render("auth", { url: `/calendar/${user._id}` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -177,6 +177,7 @@ app.get("/calendar/:userId", async (req, res) => {
       freeIntervals: freeIntervals,
       busyIntervals: busyIntervals,
       selectedDate: selectedDate,
+      "cals": data.data.calendars
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -230,7 +231,7 @@ app.get("/calendar/:userId", async (req, res) => {
 //     res.render("meeting", {
 //       organizer: user.name,
 //       meetingTime: startTime.toString(),
-//       url: `http://localhost:5001/calendar/${user._id}`
+//       url: `/calendar/${user._id}`
 //     });
 //   } catch (err) {
 //     res.status(500).json({ error: err.message });
