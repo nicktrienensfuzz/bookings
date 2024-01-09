@@ -42,11 +42,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Calendar</h1>
         <EmailCheckboxList selectedDate={ selectedDate } updatedEvents={setEvents} />
       </header>
 
       <Calendar
+        showMultiDayTimes
+        dayLayoutAlgorithm={'no-overlap'}
         defaultView={Views.DAY}
         localizer={localizer}
         events={events}
@@ -60,10 +61,10 @@ function App() {
         onSelectSlot={(slotInfo) => {
           console.log(slotInfo);
         }}
-        onDrillDown={(date) => {
-          console.log(date);
-          setSelectedDate(date);
-        }}
+        // onDrillDown={(date) => {
+        //   console.log(date);
+        //   setSelectedDate(date);
+        // }}
         eventPropGetter={(myEventsList) => {
           const backgroundColor = myEventsList.colorEvento ? myEventsList.colorEvento : 'yellow';
           const color = myEventsList.color ? myEventsList.color : 'black';

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Checkbox, Button, Form, Typography, Flex } from 'antd';
 import axios from 'axios';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const EmailCheckboxList = ({ selectedDate , updatedEvents}) => {
   const emails = [
@@ -83,11 +83,12 @@ const EmailCheckboxList = ({ selectedDate , updatedEvents}) => {
 
   return (
     <Form>
+      <Title level={2}  >Calendar</Title>
     <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>
     <Flex gap="middle" align="start" vertical>
       {emails.map((email, index) => (
         <Checkbox value={email} key={index} >
-          <Text type="warning">{emailToName(email)}</Text>
+          <Text>{emailToName(email)}</Text>
         </Checkbox>
       ))}
     </Flex>
