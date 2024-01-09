@@ -12,9 +12,12 @@ const User = require("./models/user.model");
 const Meeting = require("./models/meeting.model");
 require("dotenv").config();
 require("./config/mongoose");
+var cors = require('cors')
+
 
 const calendar = google.calendar("v3");
 const app = express();
+app.use(cors())
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -238,38 +241,38 @@ app.get("/calendar/:userId", async (req, res) => {
 //   }
 // });
 
-app.get("/admin/meetings", async (req, res) => {
-  try {
-    const userId = req.query.userId;
-    let meetingsData = [];
-    let userData;
-    if (userId) {
-      const populatedUser = await User.findById(userId)
-        .populate("meetings")
-        .exec();
+// app.get("/admin/meetings", async (req, res) => {
+//   try {
+//     const userId = req.query.userId;
+//     let meetingsData = [];
+//     let userData;
+//     if (userId) {
+//       const populatedUser = await User.findById(userId)
+//         .populate("meetings")
+//         .exec();
 
-      userData = {
-        email: populatedUser.email,
-        name: populatedUser.name,
-      };
+//       userData = {
+//         email: populatedUser.email,
+//         name: populatedUser.name,
+//       };
 
-      meetingsData = populatedUser.meetings.map((meeting) => ({
-        start: new Date(meeting.start.dateTime).toLocaleString(),
-        end: new Date(meeting.end.dateTime).toLocaleString(),
-        attendee: meeting.attendees[0].email,
-      }));
-    }
+//       meetingsData = populatedUser.meetings.map((meeting) => ({
+//         start: new Date(meeting.start.dateTime).toLocaleString(),
+//         end: new Date(meeting.end.dateTime).toLocaleString(),
+//         attendee: meeting.attendees[0].email,
+//       }));
+//     }
 
-    const users = (await User.find()).map((user) => ({
-      name: user.name,
-      email: user.email,
-      id: user._id,
-    }));
+//     const users = (await User.find()).map((user) => ({
+//       name: user.name,
+//       email: user.email,
+//       id: user._id,
+//     }));
 
-    return res.render("all-meetings", { users, meetingsData, userData });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+//     return res.render("all-meetings", { users, meetingsData, userData });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 app.listen(PORT, () => console.log(`SERVER RUNNING AT PORT ${PORT}`));
