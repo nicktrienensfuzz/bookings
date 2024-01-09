@@ -26,13 +26,13 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
-app.get("/", (req, res) => {
-  if (req.query.code) {
-    return res.redirect(`/auth/google/callback?${req.originalUrl.split("?")[1]}`);
-  }
+// app.get("/", (req, res) => {
+//   if (req.query.code) {
+//     return res.redirect(`/auth/google/callback?${req.originalUrl.split("?")[1]}`);
+//   }
 
-  res.render("index");
-});
+//   res.render("index");
+// });
 
 app.get("/auth/google", (req, res) => {
   res.redirect(getGoogleAuthURL());
