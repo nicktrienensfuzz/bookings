@@ -84,18 +84,23 @@ const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
     maxWidth: '100% ',
     backgroundColor: '#fff',
   };
+  const contentStyle = {
+    overflow: 'hidden',
+    width: '100%',
+    maxWidth: '100% ',
+    backgroundColor: '#fff',
+    padding: '24px',
+  };
 
   return (    
     <Form>
+      <Title level={2} >Calendar</Title>
       <Layout style={layoutStyle}>
-      <Header style={layoutStyle} ><Title level={2} >Calendar</Title></Header>
       <Layout style={layoutStyle}>
-        <Content style={layoutStyle}>
-          {/* <DatePicker defaultValue={selectedDate} onChange={setSelectedDate} />  */}
-        </Content>
-        <Sider width="50%" style={layoutStyle}>
-          <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>
-            <Flex gap="middle" align="start" vertical>
+        <Content style={contentStyle} >
+ 
+        <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>
+            <Flex align="start" wrap="wrap" gap="small" >
               { emails.map((email, index) => (
                 <Checkbox value={email} key={index} checked={true} >
                   <Text>{emailToName(email)}</Text>
@@ -103,6 +108,10 @@ const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
               ))}
             </Flex>
           </Checkbox.Group>
+
+        </Content>
+        <Sider width="50%" style={layoutStyle}>
+         
           <Button type="primary" onClick={handleSubmit} style={{ marginTop: '16px', marginBottom: '8px' }}>
             Submit
           </Button>

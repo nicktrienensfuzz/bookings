@@ -1,3 +1,3 @@
 npm run build 
-rm ../public/static 
+rm -r ../public/static 
 cp -r build/* ../public
