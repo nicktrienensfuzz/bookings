@@ -4,9 +4,9 @@ import { Checkbox, Button, Form, Typography, Flex, DatePicker, Layout } from 'an
 import axios from 'axios';
 
 const { Text, Title } = Typography;
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout;
 
-const EmailCheckboxList = ({ selectedDate, setSelectedDate , updatedEvents}) => {
+const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
   const emails = [
     "cesar.aguilar@monstar-lab.com",
     "matthew.knuti@monstar-lab.com",
@@ -68,14 +68,9 @@ const EmailCheckboxList = ({ selectedDate, setSelectedDate , updatedEvents}) => 
 
   const handleSubmit = async () => {
     try {
-      // Constructing a query string from the selected emails.
-      const queryParams = new URLSearchParams();
-      // selectedEmails.forEach(email => queryParams.append('emails', email));
-      queryParams.append('selectedDate', selectedDate.toISOString());
-
-      // Sending a GET request with Axios.
-      const response = await axios.post(`https://book-with-monstar-rfzisaddoa-uc.a.run.app/api/calendar/6598b4acd3a33c6d27a1b395?${queryParams.toString()}`, {
-        selectedEmails: selectedEmails
+      const response = await axios.post(`https://book-with-monstar-rfzisaddoa-uc.a.run.app/api/calendar/6598b4acd3a33c6d27a1b395`, {
+        selectedEmails: selectedEmails,
+        selectedDateRange: selectedDateRange
       });
       updatedEvents(convertEvents(response.data.cals));
     } catch (error) {
@@ -96,7 +91,7 @@ const EmailCheckboxList = ({ selectedDate, setSelectedDate , updatedEvents}) => 
       <Header style={layoutStyle} ><Title level={2} >Calendar</Title></Header>
       <Layout style={layoutStyle}>
         <Content style={layoutStyle}>
-          <DatePicker defaultValue={selectedDate} onChange={setSelectedDate} /> 
+          {/* <DatePicker defaultValue={selectedDate} onChange={setSelectedDate} />  */}
         </Content>
         <Sider width="50%" style={layoutStyle}>
           <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>

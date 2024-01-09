@@ -14,40 +14,30 @@ const localizer = momentLocalizer(moment)
 let  myEventsList = [
   {
     id: 0,
-    title: 'Board meeting',
+    title: 'Test',
     start: new Date(2024, 0, 9, 9, 0, 0),
     end: new Date(2024, 0, 9, 13, 0, 0),
     resourceId: 1,
     colorEvento:'yellow',
-  },
-  {
-  id: 1,
-  title: 'MS training',
-  start: new Date(2024, 0, 9, 12, 0, 0),
-  end: new Date(2024, 0, 9, 16, 30, 0),
-  colorEvento:'red',
-  resourceId: 2,
-},
- {
-  id: 3,
-  title: 'MS training',
-  start: new Date(2024, 0, 9, 12, 0, 0),
-  end: new Date(2024, 0, 9, 16, 30, 0),
-  colorEvento:'green',
-  resourceId: 4,
-}];
+  }];
 
 function App() {
 
   const [events, setEvents] = useState(myEventsList);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const [selectedDateRange, setSelectedDateRange] = useState(
+    {
+     start: new Date(),
+     end: new Date() 
+    }
+     );
+
   return (
     <div className="App">
       <EmailCheckboxList 
-      selectedDate={ selectedDate }
+      selectedDateRange={ selectedDateRange }
        updatedEvents={setEvents} 
-       setSelectedDate={setSelectedDate}
        />
       <Calendar
         showMultiDayTimes
@@ -64,6 +54,15 @@ function App() {
         selectedDate={ new Date() }
         onSelectSlot={(slotInfo) => {
           console.log(slotInfo);
+        }}
+        onRangeChange={(rangeInfo) => {
+          console.log(rangeInfo);
+          let range = { 
+            start: rangeInfo[0],
+            end: rangeInfo[rangeInfo.length - 1]
+          }
+          console.log(range);
+          setSelectedDateRange(range);
         }}
         eventPropGetter={(myEventsList) => {
           const backgroundColor = myEventsList.colorEvento ? myEventsList.colorEvento : 'yellow';

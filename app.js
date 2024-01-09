@@ -70,9 +70,21 @@ app.post("/api/calendar/:userId", async (req, res) => {
     const user = await User.findById(req.params.userId);
     const calendarId = user.email;
 
+    // add validation for selectedEmails
+    if (!Array.isArray(req.body.selectedEmails) || req.body.selectedEmails.length === 0) {
+      return res.status(400).json({ error: "Invalid selectedEmails" });
+    }
+
     let items = req.body.selectedEmails.map((email) => ({
       id: email,
     }));
+   
+
+    // add validation for selectedDateRange
+    let selectedDateRange = req.body.selectedDateRange;
+    if (!selectedDateRange || !selectedDateRange.start || !selectedDateRange.end) {
+      return res.status(400).json({ error: "Invalid selectedDateRange" });
+    }
 
     items.push({ 
       id: calendarId,
@@ -89,15 +101,14 @@ app.post("/api/calendar/:userId", async (req, res) => {
     const data = await calendar.freebusy.query({
       auth: getOAuth2Client(user.refresh_token),
       requestBody: {
-        timeMin: moment(selectedDate).startOf("day").format(),
-        timeMax: moment(selectedDate).endOf("day").add(5, 'days').format(),
+        timeMin: moment(selectedDateRange.start).startOf("day").format(),
+        timeMax: moment(selectedDateRange.end).endOf("day").format(),
         items: items,
         timeZone: "EST",
       },
     });
 
-    console.log("testing", data.data.calendars);
-
+    console.log("Testing", data.data.calendars);
     const combinedBusyProperties = Object.values(data.data.calendars)
       .map(person => {
         console.log(person);
