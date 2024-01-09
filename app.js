@@ -64,12 +64,20 @@ app.get("/auth/google/callback", async (req, res) => {
   }
 });
 
-
-app.get("/api/calendar/:userId", async (req, res) => {
+app.post("/api/calendar/:userId", async (req, res) => {
+  console.log("testing", req.body.selectedEmails);
   try {
     const user = await User.findById(req.params.userId);
-
     const calendarId = user.email;
+
+    let items = req.body.selectedEmails.map((email) => ({
+      id: email,
+    }));
+
+    items.push({ 
+      id: calendarId,
+    });
+    console.log(items);
 
     let selectedDate = req.query.selectedDate;
     if (!selectedDate || selectedDate === "null") {
@@ -83,27 +91,12 @@ app.get("/api/calendar/:userId", async (req, res) => {
       requestBody: {
         timeMin: moment(selectedDate).startOf("day").format(),
         timeMax: moment(selectedDate).endOf("day").format(),
-        items: [
-          {
-            id: calendarId,
-          },
-          {
-            id: "cesar.aguilar@monstar-lab.com",
-          },
-          {
-            id: "matthew.knuti@monstar-lab.com",
-          },
-        ],
+        items: items,
         timeZone: "EST",
       },
     });
 
     console.log("testing", data.data.calendars);
-    // let all = data.data.calendars.map((cal) => {
-    //   console.log(cal);
-    //   return cal.busy
-    // });
-    // console.log(all);
 
     const combinedBusyProperties = Object.values(data.data.calendars)
       .map(person => {
