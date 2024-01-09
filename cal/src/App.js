@@ -7,6 +7,8 @@ import EmailCheckboxList from './EmailCheckboxList';
 // import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 // import "antd/dist/antd.css";
 import 'antd/dist/reset.css';
+
+
 const localizer = momentLocalizer(moment)
 
 let  myEventsList = [
@@ -39,12 +41,14 @@ function App() {
 
   const [events, setEvents] = useState(myEventsList);
   const [selectedDate, setSelectedDate] = useState(new Date());
+
   return (
     <div className="App">
-      <header className="App-header">
-        <EmailCheckboxList selectedDate={ selectedDate } updatedEvents={setEvents} />
-      </header>
-
+      <EmailCheckboxList 
+      selectedDate={ selectedDate }
+       updatedEvents={setEvents} 
+       setSelectedDate={setSelectedDate}
+       />
       <Calendar
         showMultiDayTimes
         dayLayoutAlgorithm={'no-overlap'}
@@ -61,19 +65,13 @@ function App() {
         onSelectSlot={(slotInfo) => {
           console.log(slotInfo);
         }}
-        // onDrillDown={(date) => {
-        //   console.log(date);
-        //   setSelectedDate(date);
-        // }}
         eventPropGetter={(myEventsList) => {
           const backgroundColor = myEventsList.colorEvento ? myEventsList.colorEvento : 'yellow';
           const color = myEventsList.color ? myEventsList.color : 'black';
           return { style: { backgroundColor ,color} }
         }}
       />
-      
       <header className="App-header">
-
       </header>
     </div>
   );

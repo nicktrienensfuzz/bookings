@@ -90,7 +90,7 @@ app.post("/api/calendar/:userId", async (req, res) => {
       auth: getOAuth2Client(user.refresh_token),
       requestBody: {
         timeMin: moment(selectedDate).startOf("day").format(),
-        timeMax: moment(selectedDate).endOf("day").format(),
+        timeMax: moment(selectedDate).endOf("day").add(5, 'days').format(),
         items: items,
         timeZone: "EST",
       },

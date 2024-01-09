@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 // import { Form, Button } from 'react-bootstrap';
-import { Checkbox, Button, Form, Typography, Flex } from 'antd';
+import { Checkbox, Button, Form, Typography, Flex, DatePicker, Layout } from 'antd';
 import axios from 'axios';
 
 const { Text, Title } = Typography;
+const { Header, Footer, Sider, Content } = Layout;
 
-const EmailCheckboxList = ({ selectedDate , updatedEvents}) => {
+const EmailCheckboxList = ({ selectedDate, setSelectedDate , updatedEvents}) => {
   const emails = [
     "cesar.aguilar@monstar-lab.com",
     "matthew.knuti@monstar-lab.com",
@@ -82,22 +83,39 @@ const EmailCheckboxList = ({ selectedDate , updatedEvents}) => {
     }
   };
 
-  return (
+  const layoutStyle = {
+    overflow: 'hidden',
+    width: '100%',
+    maxWidth: '100% ',
+    backgroundColor: '#fff',
+  };
+
+  return (    
     <Form>
-      <Title level={2}  >Calendar</Title>
-    <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>
-    <Flex gap="middle" align="start" vertical>
-      { emails.map((email, index) => (
-        <Checkbox value={email} key={index} checked={true} >
-          <Text>{emailToName(email)}</Text>
-        </Checkbox>
-      ))}
-    </Flex>
-    </Checkbox.Group>
-    <Button type="primary" onClick={handleSubmit} style={{ marginTop: '16px', marginBottom: '8px' }}>
-      Submit
-    </Button>
+      <Layout style={layoutStyle}>
+      <Header style={layoutStyle} ><Title level={2} >Calendar</Title></Header>
+      <Layout style={layoutStyle}>
+        <Content style={layoutStyle}>
+          <DatePicker defaultValue={selectedDate} onChange={setSelectedDate} /> 
+        </Content>
+        <Sider width="50%" style={layoutStyle}>
+          <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>
+            <Flex gap="middle" align="start" vertical>
+              { emails.map((email, index) => (
+                <Checkbox value={email} key={index} checked={true} >
+                  <Text>{emailToName(email)}</Text>
+                </Checkbox>
+              ))}
+            </Flex>
+          </Checkbox.Group>
+          <Button type="primary" onClick={handleSubmit} style={{ marginTop: '16px', marginBottom: '8px' }}>
+            Submit
+          </Button>
+        </Sider>
+      </Layout>
+    </Layout>
   </Form>
+  
   );
 };
 
