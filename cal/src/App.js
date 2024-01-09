@@ -48,7 +48,7 @@ function App() {
       <Calendar
         showMultiDayTimes
         dayLayoutAlgorithm={'no-overlap'}
-        defaultView={Views.DAY}
+        defaultView={Views.WEEK}
         localizer={localizer}
         events={events}
         startAccessor="start"

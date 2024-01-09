@@ -10,6 +10,7 @@ const EmailCheckboxList = ({ selectedDate , updatedEvents}) => {
     "cesar.aguilar@monstar-lab.com",
     "matthew.knuti@monstar-lab.com",
     "nick.trienens@monstar-lab.com",
+    "luis.ruiz@monstar-lab.com",
     "juliana.loaiza@monstar-lab.com"
   ];
 
@@ -86,14 +87,14 @@ const EmailCheckboxList = ({ selectedDate , updatedEvents}) => {
       <Title level={2}  >Calendar</Title>
     <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>
     <Flex gap="middle" align="start" vertical>
-      {emails.map((email, index) => (
-        <Checkbox value={email} key={index} >
+      { emails.map((email, index) => (
+        <Checkbox value={email} key={index} checked={true} >
           <Text>{emailToName(email)}</Text>
         </Checkbox>
       ))}
     </Flex>
     </Checkbox.Group>
-    <Button type="primary" onClick={handleSubmit} style={{ marginTop: '16px' }}>
+    <Button type="primary" onClick={handleSubmit} style={{ marginTop: '16px', marginBottom: '8px' }}>
       Submit
     </Button>
   </Form>
