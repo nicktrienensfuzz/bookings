@@ -12,7 +12,8 @@ const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
     "matthew.knuti@monstar-lab.com",
     "nick.trienens@monstar-lab.com",
     "luis.ruiz@monstar-lab.com",
-    "juliana.loaiza@monstar-lab.com"
+    "juliana.loaiza@monstar-lab.com",
+    "camilo.alvarez@monstar-lab.com"
   ];
 
   const [selectedEmails, setSelectedEmails] = useState([]);
