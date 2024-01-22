@@ -1,4 +1,4 @@
-A shared calendaer with annaomized events for sharing out side teh company
+A shared calendar with annaomized events for sharing outside the company
 
 Delpoyed
 https://book-with-monstar-rfzisaddoa-uc.a.run.app/
