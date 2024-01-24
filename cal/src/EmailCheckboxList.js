@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 // import { Form, Button } from 'react-bootstrap';
 import { Checkbox, Button, Form, Typography, Flex, DatePicker, Layout } from 'antd';
 import axios from 'axios';
@@ -56,10 +56,11 @@ emails.forEach((email, index) => {
     return nameParts.map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
 };
 
+useEffect(() => {
+  handleSubmit();
+}, []);
 
   const convertEvents = (cals) => {
-   
-    
       let convertedEvents = [];
       let eventIndex = 0;
   
@@ -112,7 +113,7 @@ emails.forEach((email, index) => {
       <Layout style={layoutStyle}>
         <Content style={contentStyle} >
  
-        <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>
+        <Checkbox.Group style={{ width: '100%' }} defaultValue={selectedEmails} onChange={setSelectedEmails}>
           <Flex align="start" wrap="wrap" gap="small">
             {emails.map((email, index) => (
               <Checkbox

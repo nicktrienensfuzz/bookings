@@ -31,10 +31,11 @@ function App() {
 
   const currentDay = today.getDay();
   const daysToLastMonday = currentDay === 1 ? 7 : (currentDay + 6) % 7;
-  const start = new Date(today.getFullYear(), today.getMonth(), today.getDate() - daysToLastMonday);
+  const start = moment(today).subtract(daysToLastMonday, 'days').toDate();
 
   const daysUntilNextFriday = (5 - currentDay + 7) % 7 || 7;
-  const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + daysUntilNextFriday);
+  console.log(daysUntilNextFriday);
+  const end = moment(today).add(daysUntilNextFriday, 'days').toDate();
 
   const [selectedDateRange, setSelectedDateRange] = useState(
     {
