@@ -24,12 +24,22 @@ let  myEventsList = [
 function App() {
 
   const [events, setEvents] = useState(myEventsList);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(new Date());
+
+
+  const today = new Date();
+
+  const currentDay = today.getDay();
+  const daysToLastMonday = currentDay === 1 ? 7 : (currentDay + 6) % 7;
+  const start = new Date(today.getFullYear(), today.getMonth(), today.getDate() - daysToLastMonday);
+
+  const daysUntilNextFriday = (5 - currentDay + 7) % 7 || 7;
+  const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + daysUntilNextFriday);
 
   const [selectedDateRange, setSelectedDateRange] = useState(
     {
-     start: new Date(),
-     end: new Date() 
+     start: start,
+     end: end
     }
      );
 

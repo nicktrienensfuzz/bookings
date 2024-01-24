@@ -2,21 +2,44 @@ import React, { useState } from 'react';
 // import { Form, Button } from 'react-bootstrap';
 import { Checkbox, Button, Form, Typography, Flex, DatePicker, Layout } from 'antd';
 import axios from 'axios';
+import type { CheckboxProps } from 'antd';
+
 
 const { Text, Title } = Typography;
 const { Header, Sider, Content } = Layout;
 
 const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
   const emails = [
+    "camilo.alvarez@monstar-lab.com",
     "cesar.aguilar@monstar-lab.com",
+    "juliana.loaiza@monstar-lab.com",
+    "luis.ruiz@monstar-lab.com",
     "matthew.knuti@monstar-lab.com",
     "nick.trienens@monstar-lab.com",
-    "luis.ruiz@monstar-lab.com",
-    "juliana.loaiza@monstar-lab.com",
-    "camilo.alvarez@monstar-lab.com"
   ];
 
-  const [selectedEmails, setSelectedEmails] = useState([]);
+  const colors = [
+    'rgba(255, 255, 0, 0.3)',   // yellow
+    // 'rgba(0, 0, 255, 0.3)',     // blue
+    'rgba(0, 128, 0, 0.3)',     // green
+    'rgba(255, 0, 0, 0.3)',     // red
+    'rgba(255, 165, 0, 0.3)',   // orange
+    'rgba(128, 0, 128, 0.3)',   // purple
+    'rgba(255, 192, 203, 0.3)', // pink
+    'rgba(165, 42, 42, 0.3)',   // brown
+    'rgba(128, 128, 128, 0.3)', // grey
+    'rgba(0, 255, 255, 0.3)'    // cyan
+];
+const emailColorMap = {};
+
+emails.forEach((email, index) => {
+  emailColorMap[email] = colors[index % colors.length];
+});
+
+  const [selectedEmails, setSelectedEmails] = useState([
+    "nick.trienens@monstar-lab.com",
+    "matthew.knuti@monstar-lab.com"
+  ]);
 
   const handleCheckboxChange = (email) => {
     setSelectedEmails(selectedEmails.includes(email)
@@ -35,18 +58,7 @@ const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
 
 
   const convertEvents = (cals) => {
-    const colors = [
-        'rgba(255, 255, 0, 0.3)',   // yellow
-        // 'rgba(0, 0, 255, 0.3)',     // blue
-        'rgba(0, 128, 0, 0.3)',     // green
-        'rgba(255, 0, 0, 0.3)',     // red
-        'rgba(255, 165, 0, 0.3)',   // orange
-        'rgba(128, 0, 128, 0.3)',   // purple
-        'rgba(255, 192, 203, 0.3)', // pink
-        'rgba(165, 42, 42, 0.3)',   // brown
-        'rgba(128, 128, 128, 0.3)', // grey
-        'rgba(0, 255, 255, 0.3)'    // cyan
-    ];
+   
     
       let convertedEvents = [];
       let eventIndex = 0;
@@ -59,7 +71,7 @@ const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
                   end: new Date(busyInterval.end),
                   title: 'Busy',
                   resourceId: eventIndex,
-                  colorEvento: colors[eventIndex % colors.length] // Cycle through the colors
+                  colorEvento: emailColorMap[email] //colors[eventIndex % colors.length] // Cycle through the colors
               });
           });
           eventIndex++;
@@ -70,7 +82,7 @@ const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(`https://book-with-monstar-rfzisaddoa-uc.a.run.app/api/calendar/6598b4acd3a33c6d27a1b395`, {
-        selectedEmails: selectedEmails,
+        selectedEmails: selectedEmails.sort(),
         selectedDateRange: selectedDateRange
       });
       updatedEvents(convertEvents(response.data.cals));
@@ -101,14 +113,20 @@ const EmailCheckboxList = ({ selectedDateRange , updatedEvents}) => {
         <Content style={contentStyle} >
  
         <Checkbox.Group style={{ width: '100%' }} onChange={setSelectedEmails}>
-            <Flex align="start" wrap="wrap" gap="small" >
-              { emails.map((email, index) => (
-                <Checkbox value={email} key={index} checked={true} >
-                  <Text>{emailToName(email)}</Text>
-                </Checkbox>
-              ))}
-            </Flex>
-          </Checkbox.Group>
+          <Flex align="start" wrap="wrap" gap="small">
+            {emails.map((email, index) => (
+              <Checkbox
+                value={email}
+                key={index}
+                checked={selectedEmails.includes(email) || true} // Add checked state
+              >
+                <div style={{ backgroundColor: emailColorMap[email] , width: '15px', height: '15px', borderRadius: '50%', display: 'inline-block', marginLeft: '2px', marginRight: '4px', paddingTop: '4px' }}></div>
+                <Text>{emailToName(email)}</Text>
+                
+              </Checkbox>
+            ))}
+          </Flex>
+        </Checkbox.Group>
 
         </Content>
         <Sider width="50%" style={layoutStyle}>
