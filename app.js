@@ -10,6 +10,7 @@ const {
 const { getFreeIntervals } = require("./utils/intervals");
 const User = require("./models/user.model");
 const Meeting = require("./models/meeting.model");
+const Login = require("./models/login.model");
 require("dotenv").config();
 require("./config/mongoose");
 var cors = require('cors')
@@ -67,6 +68,11 @@ app.get("/auth/google/callback", async (req, res) => {
 // https://github.com/Azure-Samples/ms-identity-javascript-react-spa/tree/main?tab=readme-ov-file
 app.get("/msauth", async (req, res) => {
 
+  let user = new Login({
+          _id: new mongoose.Types.ObjectId(),
+          body: req.body,
+        });
+        await user.save();
   res.status(200).json({ error: res });
 
   // let user = await User.findOne({ email });
@@ -86,7 +92,7 @@ app.get("/msauth", async (req, res) => {
   // } catch (err) {
   //   res.status(500).json({ error: err.message });
   // }
-  
+
 });
 
 app.post("/api/calendar/:userId", async (req, res) => {
