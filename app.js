@@ -27,6 +27,10 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
+
+
+
+https://api-mobile-stage.nhle.com/v1/scores/2023-11-24
 // app.get("/", (req, res) => {
 //   if (req.query.code) {
 //     return res.redirect(`/auth/google/callback?${req.originalUrl.split("?")[1]}`);
@@ -70,7 +74,7 @@ app.get("/msauth", async (req, res) => {
 
   let user = new Login({
           _id: new mongoose.Types.ObjectId(),
-          body: req,
+          body: JSON.stringify(req),
         });
         await user.save();
   res.status(200).json({ error: res });
