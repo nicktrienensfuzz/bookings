@@ -3,11 +3,29 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { MsalProvider } from '@azure/msal-react';
+import { msalConfig } from './authConfig';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+
+const msalInstance = new PublicClientApplication(msalConfig);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+     <Routes>
+      <Route path="/" element={<MsalProvider instance={msalInstance}>
+        <App />
+      </MsalProvider>
+     } />
+     <Route path="/auth" element={<MsalProvider instance={msalInstance}>
+        <App />
+      </MsalProvider>
+     } />
+    </Routes>
+   </Router>  
   </React.StrictMode>
 );
 

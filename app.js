@@ -64,6 +64,31 @@ app.get("/auth/google/callback", async (req, res) => {
   }
 });
 
+// https://github.com/Azure-Samples/ms-identity-javascript-react-spa/tree/main?tab=readme-ov-file
+app.get("/msauth", async (req, res) => {
+
+  res.status(200).json({ error: res });
+
+  // let user = await User.findOne({ email });
+  // if (!user) {
+  //   try {
+  //     user = new User({
+  //       _id: new mongoose.Types.ObjectId(),
+  //       googleId: id,
+  //       name,
+  //       email,
+  //       refresh_token: googleUser.refresh_token,
+  //     });
+
+  //     await user.save();
+  //   }
+  //   res.render("auth", { url: `/calendar/${user._id}` });
+  // } catch (err) {
+  //   res.status(500).json({ error: err.message });
+  // }
+  
+});
+
 app.post("/api/calendar/:userId", async (req, res) => {
   console.log("testing", req.body.selectedEmails);
   try {
