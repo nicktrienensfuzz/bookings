@@ -70,7 +70,7 @@ app.get("/msauth", async (req, res) => {
 
   let user = new Login({
           _id: new mongoose.Types.ObjectId(),
-          body: req.body,
+          body: req,
         });
         await user.save();
   res.status(200).json({ error: res });
