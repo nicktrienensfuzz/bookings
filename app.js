@@ -71,13 +71,16 @@ app.get("/auth/google/callback", async (req, res) => {
 
 // https://github.com/Azure-Samples/ms-identity-javascript-react-spa/tree/main?tab=readme-ov-file
 app.get("/msauth", async (req, res) => {
+  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
+  console.log("testing", fullUrl);
 
   let user = new Login({
           _id: new mongoose.Types.ObjectId(),
-          body: JSON.stringify(req),
+          body: "query: " + fullUrl,
         });
         await user.save();
-  res.status(200).json({ error: res });
+  res.status(200).json({ user: user });
 
   // let user = await User.findOne({ email });
   // if (!user) {
