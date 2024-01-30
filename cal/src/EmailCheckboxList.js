@@ -98,6 +98,7 @@ useEffect(() => {
     maxWidth: '100% ',
     backgroundColor: '#fff',
   };
+
   const contentStyle = {
     overflow: 'hidden',
     width: '100%',

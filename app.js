@@ -14,6 +14,8 @@ const Login = require("./models/login.model");
 require("dotenv").config();
 require("./config/mongoose");
 var cors = require('cors')
+const url = require('url');
+const path = require('path');
 
 
 const calendar = google.calendar("v3");
@@ -28,7 +30,16 @@ app.use(express.json());
 const PORT = process.env.PORT || 8080;
 
 
-
+app.use((req, res, next) => {
+  if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+      next();
+  } else {
+      res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+      res.header('Expires', '-1');
+      res.header('Pragma', 'no-cache');
+      res.sendFile(path.join(__dirname, '/public', 'index.html'));
+  }
+});
 
 https://api-mobile-stage.nhle.com/v1/scores/2023-11-24
 // app.get("/", (req, res) => {
@@ -69,38 +80,46 @@ app.get("/auth/google/callback", async (req, res) => {
   }
 });
 
-// https://github.com/Azure-Samples/ms-identity-javascript-react-spa/tree/main?tab=readme-ov-file
-app.get("/msauth", async (req, res) => {
-  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+// // https://github.com/Azure-Samples/ms-identity-javascript-react-spa/tree/main?tab=readme-ov-file
+// app.get("/msauth", async (req, res) => {
+//   // var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+//   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
-  console.log("testing", fullUrl);
+//   console.log("testing", fullUrl);
 
-  let user = new Login({
-          _id: new mongoose.Types.ObjectId(),
-          body: "query: " + fullUrl,
-        });
-        await user.save();
-  res.status(200).json({ user: user });
+//   const parsedUrl = url.parse(req.url, true);
+//   console.log("testing", req.url);
+//   // const code = parsedUrl.fragment.split('=')[1];
 
-  // let user = await User.findOne({ email });
-  // if (!user) {
-  //   try {
-  //     user = new User({
-  //       _id: new mongoose.Types.ObjectId(),
-  //       googleId: id,
-  //       name,
-  //       email,
-  //       refresh_token: googleUser.refresh_token,
-  //     });
+//   console.log('Full URL:', fullUrl);
+//   // console.log('Code:', code);
 
-  //     await user.save();
-  //   }
-  //   res.render("auth", { url: `/calendar/${user._id}` });
-  // } catch (err) {
-  //   res.status(500).json({ error: err.message });
-  // }
+//   let user = new Login({
+//           _id: new mongoose.Types.ObjectId(),
+//           body: "query: " + fullUrl,
+//         });
+//         await user.save();
+//   res.status(200).json({ user: user });
 
-});
+//   // let user = await User.findOne({ email });
+//   // if (!user) {
+//   //   try {
+//   //     user = new User({
+//   //       _id: new mongoose.Types.ObjectId(),
+//   //       googleId: id,
+//   //       name,
+//   //       email,
+//   //       refresh_token: googleUser.refresh_token,
+//   //     });
+
+//   //     await user.save();
+//   //   }
+//   //   res.render("auth", { url: `/calendar/${user._id}` });
+//   // } catch (err) {
+//   //   res.status(500).json({ error: err.message });
+//   // }
+
+// });
 
 app.post("/api/calendar/:userId", async (req, res) => {
   console.log("testing", req.body.selectedEmails);

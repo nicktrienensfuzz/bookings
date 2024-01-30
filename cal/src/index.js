@@ -20,7 +20,7 @@ root.render(
         <App />
       </MsalProvider>
      } />
-     <Route path="/auth" element={<MsalProvider instance={msalInstance}>
+     <Route path="/msauth" element={<MsalProvider instance={msalInstance}>
         <App />
       </MsalProvider>
      } />
