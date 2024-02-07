@@ -82,7 +82,7 @@ useEffect(() => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`https://book-with-monstar-rfzisaddoa-uc.a.run.app/api/calendar/6598b4acd3a33c6d27a1b395`, {
+      const response = await axios.post(`/api/calendar/6598b4acd3a33c6d27a1b395`, {
         selectedEmails: selectedEmails.sort(),
         selectedDateRange: selectedDateRange
       });

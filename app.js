@@ -29,9 +29,13 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
-
 app.use((req, res, next) => {
-  if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+  console.log("Request: ", req.path);
+  if (/api/i.test(req.path)) {
+    next();
+    return
+  }
+  if (/(api|.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
       next();
   } else {
       res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -41,7 +45,6 @@ app.use((req, res, next) => {
   }
 });
 
-https://api-mobile-stage.nhle.com/v1/scores/2023-11-24
 // app.get("/", (req, res) => {
 //   if (req.query.code) {
 //     return res.redirect(`/auth/google/callback?${req.originalUrl.split("?")[1]}`);

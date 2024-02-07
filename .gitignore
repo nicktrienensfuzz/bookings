@@ -4,3 +4,6 @@ meeting-scheduler.zip
 /no.env
 /cal/build
 /cal/.DS_Store
+/tabs.json
+/LightsailDefaultKey-us-west-2.pem
+/connect.sh
