@@ -46,8 +46,13 @@ function App() {
         })
         .then((response) => {
           console.log(response);
+
+          // get calendar data from azure
             // callMsGraph(response.accessToken).then((response) => setGraphData(response));
         });
+        // get calendar data from azure
+
+        //callMsGraph(response.accessToken).then((response) => setGraphData(response));
    }
 
   // console.log(searchParams);
@@ -74,10 +79,18 @@ function App() {
      const handleLogin = (loginType) => {
       // loginRedirect
       // loginPopup
+
+      instance.addEventCallback((message) => {  
+        if (message.eventType === "msal:loginSuccess") {
+            console.log("login success");
+        }
+     });
+    
           instance.loginPopup(loginRequest)
           .catch(e => {
               console.log(e);
           });
+       
         
       }
 
