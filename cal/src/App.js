@@ -74,7 +74,7 @@ function App() {
      const handleLogin = (loginType) => {
       // loginRedirect
       // loginPopup
-          instance.loginRedirect(loginRequest)
+          instance.loginPopup(loginRequest)
           .catch(e => {
               console.log(e);
           });
